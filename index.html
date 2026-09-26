@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arquitectura de Aplicaciones Móviles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav id="topnav">
+  <span class="brand">arquitectura<span>.móvil</span></span>
+  <div class="links">
+    <a href="#principios">Principios</a>
+    <a href="#capas">Capas</a>
+    <a href="#patrones">Patrones</a>
+    <a href="#codigo">Código</a>
+    <a href="#casos">Casos reales</a>
+    <a href="#pasos">Pasos</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <div class="label">Blog técnico</div>
+      <h1>Arquitectura de Aplicaciones Móviles</h1>
+      <p class="sub">El plano invisible detrás de cada app: cómo se organizan la interfaz, la lógica de negocio y los datos para que una aplicación sea rápida, mantenible y capaz de crecer sin derrumbarse.</p>
+    </div>
+    <div class="skyline" aria-hidden="true">
+      <svg viewBox="0 0 260 340" fill="none">
+        <rect x="10" y="120" width="34" height="200" fill="#0d1620" stroke="#1c2b3a"/>
+        <rect x="52" y="60" width="46" height="260" fill="#0d1620" stroke="#1c2b3a"/>
+        <rect x="106" y="150" width="30" height="170" fill="#0d1620" stroke="#1c2b3a"/>
+        <rect x="144" y="30" width="52" height="290" fill="#0d1620" stroke="#1c2b3a"/>
+        <rect x="204" y="100" width="40" height="220" fill="#0d1620" stroke="#1c2b3a"/>
+        <g stroke-width="1.6">
+          <line x1="60" y1="80" x2="92" y2="80" stroke="var(--neon-cyan)"/>
+          <line x1="60" y1="105" x2="92" y2="105" stroke="var(--neon-magenta)"/>
+          <line x1="60" y1="130" x2="92" y2="130" stroke="var(--neon-amber)"/>
+          <line x1="60" y1="180" x2="92" y2="180" stroke="var(--neon-cyan)"/>
+          <line x1="152" y1="55" x2="188" y2="55" stroke="var(--neon-magenta)"/>
+          <line x1="152" y1="90" x2="188" y2="90" stroke="var(--neon-cyan)"/>
+          <line x1="152" y1="140" x2="188" y2="140" stroke="var(--neon-amber)"/>
+          <line x1="152" y1="190" x2="188" y2="190" stroke="var(--neon-magenta)"/>
+          <line x1="212" y1="130" x2="236" y2="130" stroke="var(--neon-cyan)"/>
+          <line x1="212" y1="170" x2="236" y2="170" stroke="var(--neon-amber)"/>
+        </g>
+        <rect x="0" y="318" width="260" height="4" fill="var(--neon-magenta)" opacity=".5"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="intro">
+    <div class="label">01 — Definición</div>
+    <h2>¿Qué es la arquitectura de aplicaciones móviles?</h2>
+    <p>La arquitectura de una aplicación móvil es el conjunto de patrones, estructuras y reglas que definen cómo se construye el software: cómo se conectan la interfaz de usuario (UI), la lógica de negocio y la gestión de datos. No es una tecnología concreta, sino el <em>plano estructural</em> —lo que en la industria se conoce informalmente como la "pila tecnológica"— sobre el que se apoya toda decisión posterior de desarrollo.</p>
+    <p>Una buena arquitectura no se nota cuando la app funciona bien: se nota cuando falta, en forma de errores difíciles de rastrear, actualizaciones que rompen otras partes de la app o un equipo que ya no puede añadir funciones sin miedo a romper todo lo demás.</p>
+  </section>
+
+  <section id="objetivos">
+    <div class="label">02 — Por qué importa</div>
+    <h2>Objetivos que persigue una buena arquitectura</h2>
+    <p class="deck">Cinco metas guían casi cualquier decisión arquitectónica, desde elegir un patrón de UI hasta decidir si la app trabaja sin conexión.</p>
+    <div class="grid-3">
+      <div class="panel"><h3>Mantenibilidad</h3><p>Corregir errores o añadir funciones sin reescribir la app entera.</p></div>
+      <div class="panel"><h3>Escalabilidad</h3><p>Soportar más usuarios, más datos y más funciones sin perder rendimiento.</p></div>
+      <div class="panel"><h3>Rendimiento</h3><p>Cuidar batería, memoria RAM y consumo de datos móviles.</p></div>
+      <div class="panel"><h3>Reutilización</h3><p>Componentes comunes reaprovechados entre pantallas o plataformas.</p></div>
+      <div class="panel"><h3>Testabilidad</h3><p>Probar la lógica de negocio y la interfaz de forma independiente.</p></div>
+      <div class="panel"><h3>Offline-first</h3><p>Operar en escenarios de conectividad intermitente o nula.</p></div>
+    </div>
+  </section>
+
+  <section id="principios">
+    <div class="label">03 — Principios de diseño</div>
+    <h2>Los principios que sostienen una arquitectura sólida</h2>
+    <p class="deck">Ninguno de estos principios es exclusivo de móviles, pero son el marco sobre el que se construyen las buenas prácticas de la industria.</p>
+    <div class="grid-2">
+      <div class="panel">
+        <span class="tag tag-cyan">SOLID</span>
+        <h3>Escalabilidad por diseño</h3>
+        <p>Cinco reglas (responsabilidad única, abierto/cerrado, sustitución de Liskov, segregación de interfaces e inversión de dependencias) que hacen que la app admita mejoras y ampliaciones sin fricción.</p>
+      </div>
+      <div class="panel">
+        <span class="tag tag-magenta">KISS</span>
+        <h3>Keep it simple, stupid</h3>
+        <p>Cuanto más simple es la pila tecnológica, menos probable es que aparezcan errores costosos. Se prioriza la solución mínima necesaria frente a la más "elegante".</p>
+      </div>
+      <div class="panel">
+        <span class="tag tag-amber">DRY</span>
+        <h3>Don't repeat yourself</h3>
+        <p>Reducir la repetición en el código y en los patrones lógicos disminuye la superficie de error: cada regla de negocio vive en un solo lugar.</p>
+      </div>
+      <div class="panel">
+        <span class="tag tag-cyan">CLEAN</span>
+        <h3>Arquitectura limpia</h3>
+        <p>Separa la app en capas independientes entre sí, de modo que un cambio en una capa (por ejemplo, la base de datos) no obliga a tocar las demás.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="elementos">
+    <div class="label">04 — Elementos básicos</div>
+    <h2>Las piezas que toda arquitectura debe resolver</h2>
+    <div class="panel" style="margin-bottom:14px;">
+      <h3>Experiencia de usuario (UX/UI)</h3>
+      <p>Una interfaz bien diseñada refleja la previsión del equipo de desarrollo: cuando la UI y la UX reciben atención, la app se siente intuitiva casi sin esfuerzo del usuario.</p>
+    </div>
+    <div class="panel" style="margin-bottom:14px;">
+      <h3>Estrategia de red</h3>
+      <p>No hay dos redes móviles iguales. La arquitectura debe anticipar condiciones de ancho de banda bajo, alto o nulo, y seguir funcionando en las tres.</p>
+    </div>
+    <div class="panel" style="margin-bottom:14px;">
+      <h3>Navegación</h3>
+      <p>Un flujo de navegación torpe frustra al usuario y puede provocar que abandone la app. Una navegación lógica (apilada, modal o de vista única) es de las primeras impresiones que deja la app.</p>
+    </div>
+    <div class="panel">
+      <h3>Dispositivo en uso</h3>
+      <p>La arquitectura debe adaptarse a distintos tamaños de pantalla, procesadores y capacidades térmicas, no a un único modelo de teléfono.</p>
+    </div>
+  </section>
+
+  <section id="capas">
+    <div class="label">05 — Las tres capas</div>
+    <h2>Cómo se organiza internamente una app</h2>
+    <p class="deck">Casi cualquier arquitectura móvil —sea cual sea el patrón elegido— separa el trabajo en tres capas con responsabilidades distintas.</p>
+    <div class="layers">
+      <div class="layer"><b>Presentación</b><span>UI, navegación, colores, animaciones — todo lo que el usuario ve y toca</span></div>
+      <div class="layer"><b>Negocio</b><span>Reglas, validaciones, seguridad de datos, pasarelas de pago</span></div>
+      <div class="layer"><b>Datos</b><span>Acceso, almacenamiento y verificación de la información</span></div>
+    </div>
+    <p style="margin-top:18px;color:var(--ink-dim);font-size:.95rem;">Separar estas capas es lo que permite, por ejemplo, cambiar el diseño visual de una app sin tocar la lógica de pagos, o migrar de una base de datos a otra sin rediseñar toda la interfaz.</p>
+  </section>
+
+  <section id="tipos">
+    <div class="label">06 — Según la plataforma</div>
+    <h2>Nativa, web o híbrida: tres caminos posibles</h2>
+    <table>
+      <tr><th>Tipo</th><th>Cómo funciona</th><th>Ventaja clave</th><th>Costo principal</th></tr>
+      <tr>
+        <td><b>Nativa</b><br><span style="color:var(--ink-dim)">Swift / Kotlin</span></td>
+        <td>Vive dentro del dispositivo y accede directo a sus componentes (cámara, GPS, biometría).</td>
+        <td>Máximo rendimiento incluso sin red</td>
+        <td>Poco ágil: requiere código separado por plataforma</td>
+      </tr>
+      <tr>
+        <td><b>Web</b></td>
+        <td>Se aloja en un servidor y se accede vía URL desde cualquier navegador.</td>
+        <td>Actualizaciones instantáneas y económicas</td>
+        <td>Sin acceso pleno a funciones nativas del dispositivo</td>
+      </tr>
+      <tr>
+        <td><b>Híbrida</b><br><span style="color:var(--ink-dim)">Flutter / React Native</span></td>
+        <td>Un solo código fuente corre en iOS y Android, combinando piezas nativas y web.</td>
+        <td>Menor costo y mantenimiento que la nativa</td>
+        <td>Puede sufrir cuellos de botella en la conexión web</td>
+      </tr>
+    </table>
+  </section>
+
+  <section id="patrones">
+    <div class="label">07 — Patrones de UI</div>
+    <h2>MVVM, VIPER y MVI en la práctica</h2>
+    <p class="deck">Estos patrones deciden cómo se reparte el trabajo dentro de la capa de presentación y de negocio.</p>
+
+    <div class="panel" style="margin-bottom:16px;">
+      <span class="tag tag-cyan">MVVM</span>
+      <h3>Model – View – ViewModel</h3>
+      <p>Estándar en Android/Kotlin y muy usado en SwiftUI. La Vista solo muestra el formulario y detecta el toque en "Ingresar"; el ViewModel valida el correo y mantiene el estado (cargando / error / éxito); el Modelo hace la petición HTTP y guarda el token. El código está en la sección siguiente.</p>
+      </div>
+
+    <div class="panel" style="margin-bottom:16px;">
+      <span class="tag tag-magenta">VIPER</span>
+      <h3>View – Interactor – Presenter – Entity – Router</h3>
+      <p>Habitual en apps iOS complejas. En una lista de transacciones bancarias, el Interactor filtra los datos, el Presenter les da formato de moneda, la View los renderiza y el Router abre el detalle al tocar un elemento.</p>
+    </div>
+
+    <div class="panel">
+      <span class="tag tag-amber">MVI</span>
+      <h3>Model – View – Intent</h3>
+      <p>Basado en flujo de datos unidireccional y programación reactiva (RxJava, Kotlin Flow). Cada acción del usuario se modela como una "intención" que produce un nuevo estado inmutable de la pantalla, útil cuando conviven muchos eventos simultáneos.</p>
+    </div>
+  </section>
+
+  <section id="codigo">
+    <div class="label">08 — Código</div>
+    <h2>Los patrones anteriores, en pseudocódigo</h2>
+    <p class="deck">Tres fragmentos cortos muestran cómo se ven estas ideas fuera de la teoría: un login en MVVM, un filtro en VIPER y una cola de sincronización offline-first.</p>
+
+    <div class="codeblock">
+      <div class="codehead"><span>LoginViewModel.kt — patrón MVVM</span><button class="copy-btn" data-copy>Copiar</button></div>
+      <pre><code>class LoginViewModel(private val authRepository: AuthRepository) {
+
+    val uiState = MutableStateFlow&lt;LoginUiState&gt;(LoginUiState.Idle)
+
+    fun onLoginClicked(email: String, password: String) {
+        if (!email.contains("@")) {
+            uiState.value = LoginUiState.Error("Correo inválido")
+            return
+        }
+        uiState.value = LoginUiState.Loading
+
+        viewModelScope.launch {
+            val result = authRepository.login(email, password)
+            uiState.value = result.fold(
+                onSuccess = { LoginUiState.Success(it.token) },
+                onFailure = { LoginUiState.Error(it.message) }
+            )
+        }
+    }
+}</code></pre>
+    </div>
+
+    <div class="codeblock">
+      <div class="codehead"><span>TransactionsInteractor.swift — patrón VIPER</span><button class="copy-btn" data-copy>Copiar</button></div>
+      <pre><code>protocol TransactionsInteractorProtocol {
+    func fetchRelevantTransactions()
+}
+
+final class TransactionsInteractor: TransactionsInteractorProtocol {
+    var presenter: TransactionsPresenterProtocol?
+    private let repository: TransactionsRepository
+
+    func fetchRelevantTransactions() {
+        repository.fetchAll { transactions in
+            let filtered = transactions.filter { $0.amount &gt; 100 }
+            self.presenter?.present(filtered)
+        }
+    }
+}</code></pre>
+    </div>
+
+    <div class="codeblock">
+      <div class="codehead"><span>syncQueue.js — offline-first</span><button class="copy-btn" data-copy>Copiar</button></div>
+      <pre><code>async function syncQueue() {
+  if (!navigator.onLine) return;
+
+  const pending = await db.getAll('pendingLessons');
+
+  for (const item of pending) {
+    await api.submitProgress(item);
+    await db.delete('pendingLessons', item.id);
+  }
+}
+
+window.addEventListener('online', syncQueue);</code></pre>
+    </div>
+  </section>
+
+  <section id="casos">
+    <div class="label">09 — Casos reales</div>
+    <h2>Cómo lo resuelven tres apps muy distintas</h2>
+    <div class="examples">
+      <div class="example">
+        <h3>Airbnb <span>— apostar por nativo, no por híbrido</span></h3>
+        <p>En 2016 Airbnb migró buena parte de su app a React Native para compartir código entre iOS y Android. En 2018 revirtió la decisión: los equipos native e híbrido evolucionaban a ritmos distintos y las herramientas de depuración quedaban atrás, así que volvieron a Swift/Kotlin nativo. Es el ejemplo perfecto de que "híbrido" no siempre gana: la elección depende del tamaño del equipo y de cuánto rendimiento nativo necesita el producto.</p>
+      </div>
+      <div class="example">
+        <h3>Duolingo <span>— offline-first real</span></h3>
+        <p>La app descarga por adelantado alrededor de una hora de lecciones y audio. Si el usuario pierde conexión (en el metro, en un avión), puede seguir practicando; el progreso se guarda localmente y se sincroniza con el servidor en cuanto vuelve la señal. Es la misma idea del fragmento <code>syncQueue.js</code> de arriba, aplicada a millones de usuarios.</p>
+      </div>
+      <div class="example">
+        <h3>Netflix <span>— gateway GraphQL federado</span></h3>
+        <p>Sus apps móviles son nativas (Swift/Kotlin), pero en el backend no hablan directo con decenas de microservicios: consultan un único gateway GraphQL que agrega catálogo, perfil y personalización en una sola respuesta. La app pide "lo que necesita para pintar esta pantalla" y el gateway resuelve de dónde sacarlo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="tendencias">
+    <div class="label">10 — Tendencias</div>
+    <h2>Hacia dónde se mueve la arquitectura móvil</h2>
+    <div class="grid-2">
+      <div class="panel"><h3>Event-Driven Architecture</h3><p>Flujos reactivos (RxJava, Kotlin Flow, Combine) que responden en tiempo real a cambios de estado.</p></div>
+      <div class="panel"><h3>Micro-frontends móviles</h3><p>Apps grandes divididas en módulos que se compilan y mantienen por separado.</p></div>
+      <div class="panel"><h3>Server-Driven UI</h3><p>El servidor define el diseño de las pantallas en tiempo de ejecución, sin pasar por la tienda de apps.</p></div>
+      <div class="panel"><h3>On-Device AI</h3><p>Modelos de lenguaje o visión corriendo localmente (TensorFlow Lite, CoreML) para reducir latencia y proteger privacidad.</p></div>
+    </div>
+  </section>
+
+  <section id="pasos">
+    <div class="label">11 — De la idea al lanzamiento</div>
+    <h2>Pasos para construir la arquitectura de una app</h2>
+    <ol class="steps">
+      <li><div><b>Presupuesto realista</b><p>Define cuánto puede costar el equipo, la pila tecnológica y el tiempo del proyecto.</p></div></li>
+      <li><div><b>Fase de descubrimiento</b><p>Investigar el mercado y la necesidad real del usuario antes de escribir una línea de código.</p></div></li>
+      <li><div><b>Seleccionar funciones clave</b><p>Priorizar navegación, gestión de datos y UI según lo que la app realmente necesita.</p></div></li>
+      <li><div><b>Elegir plataforma</b><p>Nativa, web o híbrida, según el público y el presupuesto.</p></div></li>
+      <li><div><b>Construir un MVP</b><p>Una versión mínima para probar la reacción real de los usuarios.</p></div></li>
+      <li><div><b>Probar la app</b><p>Detectar errores de UX/UI antes del lanzamiento.</p></div></li>
+      <li><div><b>Lanzar</b><p>Incluye promoción y marketing hacia el usuario final.</p></div></li>
+      <li><div><b>Mantenimiento</b><p>Corregir errores y ampliar la pila tecnológica según la demanda real.</p></div></li>
+      <li><div><b>Medir métricas</b><p>Retención, abandono y participación guían las decisiones futuras del producto.</p></div></li>
+    </ol>
+  </section>
+
+  <section id="conclusion">
+    <div class="label">12 — Conclusión</div>
+    <h2>La arquitectura no se ve, pero se siente</h2>
+    <p class="closing">Una buena arquitectura de aplicaciones móviles combina estética y función: es lógica, escalable, versátil y de bajo mantenimiento. El patrón que se elija —MVVM, VIPER, MVI— y la plataforma —nativa, web o híbrida— dependen del presupuesto, los usuarios finales y la funcionalidad que la app necesita resolver. Airbnb, Duolingo y Netflix llegaron a soluciones muy distintas porque partían de problemas distintos: no existe una arquitectura "correcta" en abstracto, solo la más adecuada para lo que se está construyendo.</p>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <div class="titleblock">
+    <div class="row">
+      <div class="cell"><span class="k">Proyecto</span><span class="v">Arquitectura de Aplicaciones Móviles</span></div>
+      <div class="cell"><span class="k">Autor</span><span class="v">[Tu nombre aquí]</span></div>
+    </div>
+    <div class="row">
+      <div class="cell"><span class="k">Curso</span><span class="v">[Nombre del curso]</span></div>
+      <div class="cell"><span class="k">Fecha</span><span class="v">[Fecha de entrega]</span></div>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
