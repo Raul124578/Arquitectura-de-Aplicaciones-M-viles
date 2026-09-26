@@ -60,21 +60,21 @@
   <section id="intro">
     <div class="label">01 — Definición</div>
     <h2>¿Qué es la arquitectura de aplicaciones móviles?</h2>
-    <p>La arquitectura de una aplicación móvil es el conjunto de patrones, estructuras y reglas que definen cómo se construye el software: cómo se conectan la interfaz de usuario (UI), la lógica de negocio y la gestión de datos. No es una tecnología concreta, sino el <em>plano estructural</em> —lo que en la industria se conoce informalmente como la "pila tecnológica"— sobre el que se apoya toda decisión posterior de desarrollo.</p>
-    <p>Una buena arquitectura no se nota cuando la app funciona bien: se nota cuando falta, en forma de errores difíciles de rastrear, actualizaciones que rompen otras partes de la app o un equipo que ya no puede añadir funciones sin miedo a romper todo lo demás.</p>
+    <p>Es el conjunto de reglas, estructuras y reglas que definen cómo se construirá el software. Cómo va el UX y el UI y la lógica del negocio y la gestión de datos. No es una tecnología en concreto, sino es el plano estructural de lo que se conoce informalmente como la pila de tecnología. Una buena arquitectura no se nota cuando la app funciona bien, se nota cuando falta en forma de errores difíciles de rastrear, actualizar, que rompen otras partes de la app o del equipo, ya que no se puede añadir funcionalidad sin pensar en romper a todos los demás.</p></section>
+
   </section>
 
   <section id="objetivos">
     <div class="label">02 — Por qué importa</div>
     <h2>Objetivos que persigue una buena arquitectura</h2>
-    <p class="deck">Cinco metas guían casi cualquier decisión arquitectónica, desde elegir un patrón de UI hasta decidir si la app trabaja sin conexión.</p>
+    <p class="deck">6 metas guían casi cualquier decisión arquitectónica, desde elegir un patrón de UI hasta decidir si la app trabaja sin conexión.</p>
     <div class="grid-3">
-      <div class="panel"><h3>Mantenibilidad</h3><p>Corregir errores o añadir funciones sin reescribir la app entera.</p></div>
-      <div class="panel"><h3>Escalabilidad</h3><p>Soportar más usuarios, más datos y más funciones sin perder rendimiento.</p></div>
-      <div class="panel"><h3>Rendimiento</h3><p>Cuidar batería, memoria RAM y consumo de datos móviles.</p></div>
-      <div class="panel"><h3>Reutilización</h3><p>Componentes comunes reaprovechados entre pantallas o plataformas.</p></div>
-      <div class="panel"><h3>Testabilidad</h3><p>Probar la lógica de negocio y la interfaz de forma independiente.</p></div>
-      <div class="panel"><h3>Offline-first</h3><p>Operar en escenarios de conectividad intermitente o nula.</p></div>
+      <div class="panel"><h3>Mantenibilidad</h3><p>Se encarga de hacer mantenimiento de añadir funciones o corregir las que ya estaban.</p></div>
+      <div class="panel"><h3>Escalabilidad</h3><p>Que en el futuro pueda soportar más usuarios y a la vez los datos que produzcan esos usuarios sin perder rendimiento.</p></div>
+      <div class="panel"><h3>Rendimiento</h3><p>Se encarga de administrar bien la batería, la memoria RAM y el consumo de datos móviles.</p></div>
+      <div class="panel"><h3>Reutilización</h3><p> Esos son los componentes comunes que son aprovechados para otras funciones.</p></div>
+      <div class="panel"><h3>Testabilidad</h3><p> Esta permite probar la lógica del negocio o la interfaz de forma independiente.</p></div>
+      <div class="panel"><h3>Offline-first</h3><p>Esta opera cuando no hay una conexión de internet y sigue funcionando.</p></div>
     </div>
   </section>
 
@@ -86,22 +86,23 @@
       <div class="panel">
         <span class="tag tag-cyan">SOLID</span>
         <h3>Escalabilidad por diseño</h3>
-        <p>Cinco reglas (responsabilidad única, abierto/cerrado, sustitución de Liskov, segregación de interfaces e inversión de dependencias) que hacen que la app admita mejoras y ampliaciones sin fricción.</p>
+        <p>Tiene 5 reglas Hacen que se pueda hacer mejoras y ampliciaciones sin fricción.</p>
       </div>
       <div class="panel">
         <span class="tag tag-magenta">KISS</span>
-        <h3>Keep it simple, stupid</h3>
-        <p>Cuanto más simple es la pila tecnológica, menos probable es que aparezcan errores costosos. Se prioriza la solución mínima necesaria frente a la más "elegante".</p>
+        <h3>Keep it simple</h3>
+        <p>No se tiene que hacer de una manera difícil sino la mejor manera es de hacerlo simple  , se debe priorizar la solución mínima.</p>
       </div>
       <div class="panel">
         <span class="tag tag-amber">DRY</span>
         <h3>Don't repeat yourself</h3>
-        <p>Reducir la repetición en el código y en los patrones lógicos disminuye la superficie de error: cada regla de negocio vive en un solo lugar.</p>
+        <p>Este reduce la repetición de código y los patrones y disminuye la superficie de errores. Cada regla de negocio vive en un solo lugar.
+</p>
       </div>
       <div class="panel">
         <span class="tag tag-cyan">CLEAN</span>
         <h3>Arquitectura limpia</h3>
-        <p>Separa la app en capas independientes entre sí, de modo que un cambio en una capa (por ejemplo, la base de datos) no obliga a tocar las demás.</p>
+        <p>Se encarga de  separar las capas independientes entre sí, de modo que si hay un cambio en una capa, no se tenga que obligar a cambiar las demás.</p>
       </div>
     </div>
   </section>
