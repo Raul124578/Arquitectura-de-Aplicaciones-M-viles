@@ -190,71 +190,7 @@
     </div>
   </section>
 
-  <section id="codigo">
-    <div class="label">08 — Código</div>
-    <h2>Los patrones anteriores, en pseudocódigo</h2>
-    <p class="deck">Tres fragmentos cortos muestran cómo se ven estas ideas fuera de la teoría: un login en MVVM, un filtro en VIPER y una cola de sincronización offline-first.</p>
-
-    <div class="codeblock">
-      <div class="codehead"><span>LoginViewModel.kt — patrón MVVM</span><button class="copy-btn" data-copy>Copiar</button></div>
-      <pre><code>class LoginViewModel(private val authRepository: AuthRepository) {
-
-    val uiState = MutableStateFlow&lt;LoginUiState&gt;(LoginUiState.Idle)
-
-    fun onLoginClicked(email: String, password: String) {
-        if (!email.contains("@")) {
-            uiState.value = LoginUiState.Error("Correo inválido")
-            return
-        }
-        uiState.value = LoginUiState.Loading
-
-        viewModelScope.launch {
-            val result = authRepository.login(email, password)
-            uiState.value = result.fold(
-                onSuccess = { LoginUiState.Success(it.token) },
-                onFailure = { LoginUiState.Error(it.message) }
-            )
-        }
-    }
-}</code></pre>
-    </div>
-
-    <div class="codeblock">
-      <div class="codehead"><span>TransactionsInteractor.swift — patrón VIPER</span><button class="copy-btn" data-copy>Copiar</button></div>
-      <pre><code>protocol TransactionsInteractorProtocol {
-    func fetchRelevantTransactions()
-}
-
-final class TransactionsInteractor: TransactionsInteractorProtocol {
-    var presenter: TransactionsPresenterProtocol?
-    private let repository: TransactionsRepository
-
-    func fetchRelevantTransactions() {
-        repository.fetchAll { transactions in
-            let filtered = transactions.filter { $0.amount &gt; 100 }
-            self.presenter?.present(filtered)
-        }
-    }
-}</code></pre>
-    </div>
-
-    <div class="codeblock">
-      <div class="codehead"><span>syncQueue.js — offline-first</span><button class="copy-btn" data-copy>Copiar</button></div>
-      <pre><code>async function syncQueue() {
-  if (!navigator.onLine) return;
-
-  const pending = await db.getAll('pendingLessons');
-
-  for (const item of pending) {
-    await api.submitProgress(item);
-    await db.delete('pendingLessons', item.id);
-  }
-}
-
-window.addEventListener('online', syncQueue);</code></pre>
-    </div>
-  </section>
-
+    
   <section id="casos">
     <div class="label">09 — Casos reales</div>
     <h2>Cómo lo resuelven tres apps muy distintas</h2>
